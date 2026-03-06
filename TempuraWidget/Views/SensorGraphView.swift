@@ -1,5 +1,5 @@
 // SensorGraphView.swift
-// Single sensor line chart with temperature label overlaid in top-right
+// Single sensor line chart with temperature label overlaid in top-left
 
 import SwiftUI
 
@@ -14,13 +14,21 @@ struct SensorGraphView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .topLeading) {
-                // Line graph
+                // Grid lines
+                gridLines(in: geo.size)
+                    .stroke(.white.opacity(0.07), lineWidth: 0.5)
+
+                // Line graph (smooth bezier)
                 if temperatures.count >= 2 {
-                    linePath(in: geo.size)
-                        .stroke(lineColor, style: StrokeStyle(lineWidth: 1.5, lineCap: .round, lineJoin: .round))
+                    smoothPath(in: geo.size)
+                        .stroke(
+                            sensorColor,
+                            style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
+                        )
+                        .shadow(color: sensorColor.opacity(0.6), radius: 4, x: 0, y: 0)
                 }
 
-                // Y-axis labels (left side): max, mid, min
+                // Y-axis labels (right side)
                 let midTemp = (minTemp + maxTemp) / 2
                 VStack(alignment: .trailing, spacing: 0) {
                     Text("\(Int(maxTemp))°")
@@ -30,23 +38,23 @@ struct SensorGraphView: View {
                     Text("\(Int(minTemp))°")
                 }
                 .font(.system(size: 9, weight: .regular, design: .monospaced))
-                .foregroundStyle(.white.opacity(0.35))
+                .foregroundStyle(.white.opacity(0.3))
                 .padding(.trailing, 4)
                 .padding(.vertical, 4)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
 
-                // Current temperature label (top-left, inside graph)
-                VStack(alignment: .leading, spacing: 1) {
+                // Sensor label + current temperature (top-left)
+                VStack(alignment: .leading, spacing: 2) {
                     Text(label)
                         .font(.system(size: 13, weight: .semibold, design: .monospaced))
-                        .foregroundStyle(sensorColor.opacity(0.85))
+                        .foregroundStyle(sensorColor)
                     if let current = temperatures.last, isAvailable {
                         Text(String(format: "%.0f°", current))
-                            .font(.system(size: 22, weight: .bold, design: .monospaced))
-                            .foregroundStyle(labelColor(for: current))
+                            .font(.system(size: 24, weight: .bold, design: .monospaced))
+                            .foregroundStyle(.white)
                     } else {
                         Text("--°")
-                            .font(.system(size: 22, weight: .bold, design: .monospaced))
+                            .font(.system(size: 24, weight: .bold, design: .monospaced))
                             .foregroundStyle(.white.opacity(0.3))
                     }
                 }
@@ -56,22 +64,39 @@ struct SensorGraphView: View {
         }
     }
 
-    // MARK: - Line path
+    // MARK: - Grid
 
-    private func linePath(in size: CGSize) -> Path {
+    private func gridLines(in size: CGSize) -> Path {
         Path { path in
-            let count = temperatures.count
-            let step = size.width / Double(count - 1)
+            // 横3本（上・中・下）
+            for frac in [0.0, 0.5, 1.0] {
+                let y = size.height * frac
+                path.move(to: CGPoint(x: 0, y: y))
+                path.addLine(to: CGPoint(x: size.width, y: y))
+            }
+        }
+    }
 
-            for (i, temp) in temperatures.enumerated() {
-                let x = Double(i) * step
-                let y = size.height - (temp - minTemp) / (maxTemp - minTemp) * size.height
-                let clampedY = max(0, min(size.height, y))
-                if i == 0 {
-                    path.move(to: CGPoint(x: x, y: clampedY))
-                } else {
-                    path.addLine(to: CGPoint(x: x, y: clampedY))
-                }
+    // MARK: - Smooth bezier path
+
+    private func smoothPath(in size: CGSize) -> Path {
+        let count = temperatures.count
+        let step = size.width / Double(count - 1)
+
+        func point(_ i: Int) -> CGPoint {
+            let x = Double(i) * step
+            let y = size.height - (temperatures[i] - minTemp) / (maxTemp - minTemp) * size.height
+            return CGPoint(x: x, y: max(0, min(size.height, y)))
+        }
+
+        return Path { path in
+            path.move(to: point(0))
+            for i in 1..<count {
+                let prev = point(i - 1)
+                let curr = point(i)
+                let cp1 = CGPoint(x: prev.x + step * 0.4, y: prev.y)
+                let cp2 = CGPoint(x: curr.x - step * 0.4, y: curr.y)
+                path.addCurve(to: curr, control1: cp1, control2: cp2)
             }
         }
     }
@@ -80,24 +105,9 @@ struct SensorGraphView: View {
 
     private var sensorColor: Color {
         switch label {
-        case "CPU": return Color(red: 0.4, green: 0.8, blue: 1.0)   // ライトブルー
-        case "GPU": return Color(red: 0.8, green: 0.5, blue: 1.0)   // ライトパープル
-        default:    return Color(red: 0.4, green: 1.0, blue: 0.8)   // ライトティール（MEM）
+        case "CPU": return Color(red: 1.0, green: 0.25, blue: 0.65)  // マゼンタ/ピンク
+        case "GPU": return Color(red: 0.2,  green: 0.75, blue: 1.0)  // シアン/水色
+        default:    return Color(red: 0.0,  green: 0.9,  blue: 0.75) // ティール/グリーン（MEM）
         }
-    }
-
-    private var lineColor: Color {
-        guard let current = temperatures.last else { return .green }
-        return temperatureColor(current).opacity(0.85)
-    }
-
-    private func labelColor(for temp: Double) -> Color {
-        temperatureColor(temp)
-    }
-
-    private func temperatureColor(_ temp: Double) -> Color {
-        if temp >= 80 { return .red }
-        if temp >= 60 { return Color(red: 1.0, green: 0.8, blue: 0.0) }
-        return Color(red: 0.3, green: 1.0, blue: 0.4)
     }
 }

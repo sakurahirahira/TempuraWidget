@@ -11,12 +11,12 @@ struct OverlayWindowView: View {
             let isWide = geo.size.width > 400
 
             ZStack {
-                // Frosted glass background
+                // Dark navy background (画像に合わせたダークネイビー)
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color(red: 0.12, green: 0.14, blue: 0.20).opacity(0.92))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
+                            .strokeBorder(.white.opacity(0.12), lineWidth: 0.5)
                     )
 
                 // Sensor graphs
