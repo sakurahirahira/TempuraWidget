@@ -1,0 +1,360 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0216221564D7539849FE72A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */; };
+		05FFAB049AA93CED02B2CAE4 /* SensorReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B502C20C7567534C5FB3D /* SensorReading.swift */; };
+		18BAA5DC912B0D226DD663D7 /* OverlayWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */; };
+		239D5E3A35E160C4580845B0 /* TempuraWidgetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44CD3B82C330D61B6D356AC /* TempuraWidgetApp.swift */; };
+		2A3572DED20D9BD3911D7298 /* SMCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B518EC534AD5607976F4A /* SMCReader.swift */; };
+		6593E4224AF1FBC3A26F5694 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA316E3D0AFE3FDCA774B35 /* IOKit.framework */; };
+		6E7363FEE4CD63F7EA443924 /* TemperatureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F93F62AB01BA56473506594 /* TemperatureStore.swift */; };
+		F13FA4231702DCFFCC5BC8AC /* SensorGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindowView.swift; sourceTree = "<group>"; };
+		1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorGraphView.swift; sourceTree = "<group>"; };
+		1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2B4B518EC534AD5607976F4A /* SMCReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCReader.swift; sourceTree = "<group>"; };
+		453B502C20C7567534C5FB3D /* SensorReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReading.swift; sourceTree = "<group>"; };
+		5DA316E3D0AFE3FDCA774B35 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		7F93F62AB01BA56473506594 /* TemperatureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureStore.swift; sourceTree = "<group>"; };
+		AB684E5274DC877D11180C66 /* TempuraWidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempuraWidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE5A300D20D4A1452883A31E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E44CD3B82C330D61B6D356AC /* TempuraWidgetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempuraWidgetApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		919260077837FA49A27492DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6593E4224AF1FBC3A26F5694 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		45D8DFFE9FB3C7D91FA6DAC8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB684E5274DC877D11180C66 /* TempuraWidget.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7BAC22434794D5A3B6914921 = {
+			isa = PBXGroup;
+			children = (
+				D5480C6DE6A447C3646577C1 /* TempuraWidget */,
+				B9CE9AFE22F5C981B1C89189 /* Frameworks */,
+				45D8DFFE9FB3C7D91FA6DAC8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7F1040A102D170FCF2202D78 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2B4B518EC534AD5607976F4A /* SMCReader.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B9CE9AFE22F5C981B1C89189 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5DA316E3D0AFE3FDCA774B35 /* IOKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BAB2DE9BDF335918AB2B4EBF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */,
+				1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		BD5EB78ADF89CFB93DBD9F72 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				453B502C20C7567534C5FB3D /* SensorReading.swift */,
+				7F93F62AB01BA56473506594 /* TemperatureStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D5480C6DE6A447C3646577C1 /* TempuraWidget */ = {
+			isa = PBXGroup;
+			children = (
+				1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */,
+				AE5A300D20D4A1452883A31E /* Info.plist */,
+				E44CD3B82C330D61B6D356AC /* TempuraWidgetApp.swift */,
+				BD5EB78ADF89CFB93DBD9F72 /* Models */,
+				7F1040A102D170FCF2202D78 /* Services */,
+				BAB2DE9BDF335918AB2B4EBF /* Views */,
+			);
+			path = TempuraWidget;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		21568CD297BBC0E5954BE6F4 /* TempuraWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4F5F222F21A460F4AC347E5 /* Build configuration list for PBXNativeTarget "TempuraWidget" */;
+			buildPhases = (
+				5A6AAAD7B2043D3FDF3D3DC9 /* Sources */,
+				919260077837FA49A27492DB /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TempuraWidget;
+			packageProductDependencies = (
+			);
+			productName = TempuraWidget;
+			productReference = AB684E5274DC877D11180C66 /* TempuraWidget.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		13D3D8F866CFF43D43668B38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					21568CD297BBC0E5954BE6F4 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1626455F22E8C50F197606B0 /* Build configuration list for PBXProject "TempuraWidget" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 7BAC22434794D5A3B6914921;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				21568CD297BBC0E5954BE6F4 /* TempuraWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5A6AAAD7B2043D3FDF3D3DC9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0216221564D7539849FE72A9 /* AppDelegate.swift in Sources */,
+				18BAA5DC912B0D226DD663D7 /* OverlayWindowView.swift in Sources */,
+				2A3572DED20D9BD3911D7298 /* SMCReader.swift in Sources */,
+				F13FA4231702DCFFCC5BC8AC /* SensorGraphView.swift in Sources */,
+				05FFAB049AA93CED02B2CAE4 /* SensorReading.swift in Sources */,
+				6E7363FEE4CD63F7EA443924 /* TemperatureStore.swift in Sources */,
+				239D5E3A35E160C4580845B0 /* TempuraWidgetApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		02370D3F5E4D868F00830655 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = TempuraWidget;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		A94C9E9350B3B6F9BEACA4EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TempuraWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.makoto.TempuraWidget;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		AABF6D8376A3B0E40A28DA42 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = TempuraWidget;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		E9840400D58C59C216EDC668 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = TempuraWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.makoto.TempuraWidget;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1626455F22E8C50F197606B0 /* Build configuration list for PBXProject "TempuraWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AABF6D8376A3B0E40A28DA42 /* Debug */,
+				02370D3F5E4D868F00830655 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E4F5F222F21A460F4AC347E5 /* Build configuration list for PBXNativeTarget "TempuraWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A94C9E9350B3B6F9BEACA4EC /* Debug */,
+				E9840400D58C59C216EDC668 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 13D3D8F866CFF43D43668B38 /* Project object */;
+}

@@ -1,0 +1,29 @@
+name: TempuraWidget
+options:
+  bundleIdPrefix: com.makoto
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "15"
+
+settings:
+  base:
+    PRODUCT_NAME: TempuraWidget
+    SWIFT_VERSION: "5.10"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_APP_SANDBOX: NO
+    ENABLE_HARDENED_RUNTIME: YES
+
+targets:
+  TempuraWidget:
+    type: application
+    platform: macOS
+    sources:
+      - TempuraWidget
+    settings:
+      base:
+        INFOPLIST_FILE: TempuraWidget/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.makoto.TempuraWidget
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    dependencies:
+      - sdk: IOKit.framework
