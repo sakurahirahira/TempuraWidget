@@ -8,8 +8,21 @@ struct SensorGraphView: View {
     let temperatures: [Double]
     let isAvailable: Bool
 
-    private let minTemp: Double = 30
-    private let maxTemp: Double = 100
+    // デフォルトレンジ。データがはみ出たら自動拡張する
+    private let defaultMin: Double = 35
+    private let defaultMax: Double = 60
+
+    private var yRange: (min: Double, max: Double) {
+        guard !temperatures.isEmpty else { return (defaultMin, defaultMax) }
+        let dataMin = temperatures.min()!
+        let dataMax = temperatures.max()!
+        let lo = min(dataMin - 3, defaultMin)
+        let hi = max(dataMax + 3, defaultMax)
+        return (lo, hi)
+    }
+
+    private var minTemp: Double { yRange.min }
+    private var maxTemp: Double { yRange.max }
 
     var body: some View {
         GeometryReader { geo in
@@ -79,26 +92,58 @@ struct SensorGraphView: View {
 
     // MARK: - Smooth bezier path
 
-    private func smoothPath(in size: CGSize) -> Path {
-        let count = temperatures.count
-        let step = size.width / Double(count - 1)
+    private let maxPoints = 2400  // 10分 × 4Hz
 
-        func point(_ i: Int) -> CGPoint {
-            let x = Double(i) * step
-            let y = size.height - (temperatures[i] - minTemp) / (maxTemp - minTemp) * size.height
-            return CGPoint(x: x, y: max(0, min(size.height, y)))
+    private func smoothPath(in size: CGSize) -> Path {
+        // 1. 移動平均でデータを平滑化
+        let smoothed = movingAverage(temperatures, window: 40)
+        guard smoothed.count >= 2 else { return Path() }
+
+        // 2. X軸は常に2400点固定スケール
+        //    データが溜まるにつれ左から右へ線が伸び、
+        //    満杯になったら左スクロールになる
+        let xScale = size.width / Double(maxPoints - 1)
+
+        // 3. 間引き（表示用に最大60点）
+        let strideSize = max(1, smoothed.count / 60)
+        var pts: [CGPoint] = []
+        var i = 0
+        while i < smoothed.count {
+            let x = Double(i) * xScale
+            let y = size.height - (smoothed[i] - minTemp) / (maxTemp - minTemp) * size.height
+            pts.append(CGPoint(x: x, y: max(0, min(size.height, y))))
+            i += strideSize
         }
 
+        // 4. Catmull-Rom スプライン
         return Path { path in
-            path.move(to: point(0))
-            for i in 1..<count {
-                let prev = point(i - 1)
-                let curr = point(i)
-                let cp1 = CGPoint(x: prev.x + step * 0.4, y: prev.y)
-                let cp2 = CGPoint(x: curr.x - step * 0.4, y: curr.y)
-                path.addCurve(to: curr, control1: cp1, control2: cp2)
+            guard pts.count >= 2 else { return }
+            path.move(to: pts[0])
+            for j in 1..<pts.count {
+                let p0 = pts[max(0, j - 2)]
+                let p1 = pts[j - 1]
+                let p2 = pts[j]
+                let p3 = pts[min(pts.count - 1, j + 1)]
+                let cp1 = CGPoint(x: p1.x + (p2.x - p0.x) / 6,
+                                  y: p1.y + (p2.y - p0.y) / 6)
+                let cp2 = CGPoint(x: p2.x - (p3.x - p1.x) / 6,
+                                  y: p2.y - (p3.y - p1.y) / 6)
+                path.addCurve(to: p2, control1: cp1, control2: cp2)
             }
         }
+    }
+
+    private func movingAverage(_ data: [Double], window: Int) -> [Double] {
+        guard data.count >= window else { return data }
+        var result: [Double] = []
+        result.reserveCapacity(data.count)
+        for i in 0..<data.count {
+            let from = max(0, i - window / 2)
+            let to   = min(data.count - 1, i + window / 2)
+            let slice = data[from...to]
+            result.append(slice.reduce(0, +) / Double(slice.count))
+        }
+        return result
     }
 
     // MARK: - Colors
