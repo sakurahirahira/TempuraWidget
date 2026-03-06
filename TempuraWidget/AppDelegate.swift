@@ -29,7 +29,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let contentView = OverlayWindowView()
             .environmentObject(store)
 
-        panel.contentView = NSHostingView(rootView: contentView)
+        panel.contentView = DraggableHostingView(rootView: contentView)
         panel.orderFrontRegardless()
         self.panel = panel
     }

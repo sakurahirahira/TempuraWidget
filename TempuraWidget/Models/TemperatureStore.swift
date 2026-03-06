@@ -21,6 +21,7 @@ final class TemperatureStore: ObservableObject {
     private var timer: Timer?
 
     init() {
+        smcReader.logAvailableTemperatureKeys()
         start()
     }
 

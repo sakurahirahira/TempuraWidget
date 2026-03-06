@@ -14,6 +14,7 @@
 		2A3572DED20D9BD3911D7298 /* SMCReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B4B518EC534AD5607976F4A /* SMCReader.swift */; };
 		6593E4224AF1FBC3A26F5694 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA316E3D0AFE3FDCA774B35 /* IOKit.framework */; };
 		6E7363FEE4CD63F7EA443924 /* TemperatureStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F93F62AB01BA56473506594 /* TemperatureStore.swift */; };
+		973FF84702AB8177970851BC /* DraggableHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3B10356CF6E72905B648DE /* DraggableHostingView.swift */; };
 		F13FA4231702DCFFCC5BC8AC /* SensorGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */; };
 /* End PBXBuildFile section */
 
@@ -24,6 +25,7 @@
 		2B4B518EC534AD5607976F4A /* SMCReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCReader.swift; sourceTree = "<group>"; };
 		453B502C20C7567534C5FB3D /* SensorReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorReading.swift; sourceTree = "<group>"; };
 		5DA316E3D0AFE3FDCA774B35 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		7B3B10356CF6E72905B648DE /* DraggableHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableHostingView.swift; sourceTree = "<group>"; };
 		7F93F62AB01BA56473506594 /* TemperatureStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureStore.swift; sourceTree = "<group>"; };
 		AB684E5274DC877D11180C66 /* TempuraWidget.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TempuraWidget.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE5A300D20D4A1452883A31E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 		BAB2DE9BDF335918AB2B4EBF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B3B10356CF6E72905B648DE /* DraggableHostingView.swift */,
 				0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */,
 				1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */,
 			);
@@ -166,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0216221564D7539849FE72A9 /* AppDelegate.swift in Sources */,
+				973FF84702AB8177970851BC /* DraggableHostingView.swift in Sources */,
 				18BAA5DC912B0D226DD663D7 /* OverlayWindowView.swift in Sources */,
 				2A3572DED20D9BD3911D7298 /* SMCReader.swift in Sources */,
 				F13FA4231702DCFFCC5BC8AC /* SensorGraphView.swift in Sources */,

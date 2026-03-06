@@ -9,6 +9,8 @@ import Foundation
 private let KERNEL_INDEX_SMC: UInt32 = 2
 private let kSMCGetKeyInfo: UInt8 = 9
 private let kSMCReadKey: UInt8 = 5
+private let kSMCGetKeyFromIndex: UInt8 = 8
+private let kSMCGetKeyCount: UInt8 = 7
 
 // MARK: - SMC Param Struct (80 bytes, matches kernel struct layout exactly)
 // Flat layout with explicit padding to guarantee correct byte offsets
@@ -111,11 +113,46 @@ final class SMCReader {
     /// Memory/bandwidth controller temperature
     var memoryTemperature: Double? {
         let keys = [
-            "Tm09", "Tm0D", "Tm0N", "Tm0P", "Tm0S",  // memory bandwidth controller
+            "Tm0p", "Tm1p", "Tm2p",                   // M4 memory (lowercase p)
+            "Tm09", "Tm0D", "Tm0N", "Tm0P", "Tm0S",  // M1/M2/M3 memory
             "TM0P", "TM0S", "TM1P", "TM1S",           // LPDDR thermal sensors
-            "Tf04", "Tf09", "Tf0A", "Tf0B",            // SoC fabric (used on some chips)
+            "Tf04", "Tf09", "Tf0A", "Tf0B",            // SoC fabric
         ]
         return averageTemp(keys: keys)
+    }
+
+    /// Enumerate all SMC keys via index and log temperature-related ones (prefix "T")
+    func logAvailableTemperatureKeys() {
+        guard connection != 0 else {
+            NSLog("SMC: no connection")
+            return
+        }
+
+        // Get total key count via #KEY
+        var input = SMCParamStruct()
+        input.key = fourCC("#KEY")
+        guard let countResult = smcCall(selector: kSMCReadKey, input: &input) else {
+            NSLog("SMC: could not read key count")
+            return
+        }
+        let keyCount = UInt32(countResult.bytes.0) << 24
+                     | UInt32(countResult.bytes.1) << 16
+                     | UInt32(countResult.bytes.2) << 8
+                     | UInt32(countResult.bytes.3)
+        NSLog("SMC: total keys = %d", keyCount)
+
+        // Enumerate all keys, log those starting with 'T' that return valid temps
+        for i in 0..<min(keyCount, 512) {
+            var req = SMCParamStruct()
+            req.data32 = i
+            guard let resp = smcCall(selector: kSMCGetKeyFromIndex, input: &req) else { continue }
+            let keyBytes = (resp.bytes.0, resp.bytes.1, resp.bytes.2, resp.bytes.3)
+            guard keyBytes.0 == UInt8(ascii: "T") else { continue }
+            let name = String(bytes: [keyBytes.0, keyBytes.1, keyBytes.2, keyBytes.3], encoding: .ascii) ?? "????"
+            if let val = readKey(name), val > 1.0, val < 150.0 {
+                NSLog("SMC temp key: %@ = %.1f°C", name, val)
+            }
+        }
     }
 
     // MARK: - Private helpers
