@@ -150,7 +150,7 @@ struct SensorGraphView: View {
 
     private var sensorColor: Color {
         switch label {
-        case "CPU": return Color(red: 1.0, green: 0.25, blue: 0.65)  // マゼンタ/ピンク
+        case "CPU": return Color(red: 0.7, green: 0.35, blue: 1.0)   // パープル
         case "GPU": return Color(red: 0.2,  green: 0.75, blue: 1.0)  // シアン/水色
         case "ANE": return Color(red: 1.0, green: 0.6,  blue: 0.1)  // オレンジ
         default:    return Color(red: 0.0,  green: 0.9,  blue: 0.75) // ティール/グリーン（MEM）
