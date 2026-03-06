@@ -20,6 +20,24 @@ struct SensorGraphView: View {
                         .stroke(lineColor, style: StrokeStyle(lineWidth: 1.5, lineCap: .round, lineJoin: .round))
                 }
 
+                // Y-axis labels (left side): max, mid, min
+                let midTemp = (minTemp + maxTemp) / 2
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("\(Int(maxTemp))°")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Text("\(Int(midTemp))°")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Text("\(Int(minTemp))°")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .font(.system(size: 9, weight: .regular, design: .monospaced))
+                .foregroundStyle(.white.opacity(0.35))
+                .padding(.leading, 4)
+                .padding(.vertical, 4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+
                 // Current temperature label (top-right, inside graph)
                 VStack(alignment: .trailing, spacing: 1) {
                     Text(label)
