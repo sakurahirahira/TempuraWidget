@@ -22,6 +22,8 @@
     <string>14.0</string>
     <key>NSHighResolutionCapable</key>
     <true/>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>ウィジェットのドラッグ移動に使用します</string>
     <key>LSUIElement</key>
     <true/>
 </dict>
