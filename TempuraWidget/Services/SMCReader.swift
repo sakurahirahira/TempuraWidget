@@ -229,8 +229,8 @@ final class SMCReader {
             return Double(raw) / 4.0
 
         case kFLT:
-            // 32-bit float, big-endian bytes
-            let bits = UInt32(b0) << 24 | UInt32(b1) << 16 | UInt32(value.bytes.2) << 8 | UInt32(value.bytes.3)
+            // 32-bit float, little-endian bytes (Apple Silicon SMC)
+            let bits = UInt32(value.bytes.3) << 24 | UInt32(value.bytes.2) << 16 | UInt32(b1) << 8 | UInt32(b0)
             return Double(Float(bitPattern: bits))
 
         default:

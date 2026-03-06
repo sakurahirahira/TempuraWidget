@@ -13,7 +13,7 @@ struct SensorGraphView: View {
 
     var body: some View {
         GeometryReader { geo in
-            ZStack(alignment: .topTrailing) {
+            ZStack(alignment: .topLeading) {
                 // Line graph
                 if temperatures.count >= 2 {
                     linePath(in: geo.size)
@@ -22,27 +22,24 @@ struct SensorGraphView: View {
 
                 // Y-axis labels (left side): max, mid, min
                 let midTemp = (minTemp + maxTemp) / 2
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .trailing, spacing: 0) {
                     Text("\(Int(maxTemp))°")
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                     Text("\(Int(midTemp))°")
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                     Text("\(Int(minTemp))°")
-                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .font(.system(size: 9, weight: .regular, design: .monospaced))
                 .foregroundStyle(.white.opacity(0.35))
-                .padding(.leading, 4)
+                .padding(.trailing, 4)
                 .padding(.vertical, 4)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
 
-                // Current temperature label (top-right, inside graph)
-                VStack(alignment: .trailing, spacing: 1) {
+                // Current temperature label (top-left, inside graph)
+                VStack(alignment: .leading, spacing: 1) {
                     Text(label)
-                        .font(.system(size: 10, weight: .medium, design: .monospaced))
-                        .foregroundStyle(.white.opacity(0.6))
+                        .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(sensorColor.opacity(0.85))
                     if let current = temperatures.last, isAvailable {
                         Text(String(format: "%.0f°", current))
                             .font(.system(size: 22, weight: .bold, design: .monospaced))
@@ -54,7 +51,7 @@ struct SensorGraphView: View {
                     }
                 }
                 .padding(.top, 6)
-                .padding(.trailing, 8)
+                .padding(.leading, 8)
             }
         }
     }
@@ -80,6 +77,14 @@ struct SensorGraphView: View {
     }
 
     // MARK: - Colors
+
+    private var sensorColor: Color {
+        switch label {
+        case "CPU": return Color(red: 0.4, green: 0.8, blue: 1.0)   // ライトブルー
+        case "GPU": return Color(red: 0.8, green: 0.5, blue: 1.0)   // ライトパープル
+        default:    return Color(red: 0.4, green: 1.0, blue: 0.8)   // ライトティール（MEM）
+        }
+    }
 
     private var lineColor: Color {
         guard let current = temperatures.last else { return .green }
