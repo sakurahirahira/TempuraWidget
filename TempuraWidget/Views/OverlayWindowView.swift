@@ -21,23 +21,27 @@ struct OverlayWindowView: View {
 
                 // Sensor graphs
                 if isWide {
-                    // Medium: 3 sensors side by side
+                    // Medium: 4 sensors side by side
                     HStack(spacing: 1) {
                         graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
                         graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
                         graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        Divider().background(.white.opacity(0.1))
+                        graphCell(label: "ANE", temps: store.aneTemps, available: store.aneAvailable)
                     }
                     .padding(8)
                 } else {
-                    // Small: 3 sensors stacked
+                    // Small: 4 sensors stacked
                     VStack(spacing: 1) {
                         graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
                         graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
                         graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        Divider().background(.white.opacity(0.1))
+                        graphCell(label: "ANE", temps: store.aneTemps, available: store.aneAvailable)
                     }
                     .padding(8)
                 }

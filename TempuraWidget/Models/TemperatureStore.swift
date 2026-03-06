@@ -12,10 +12,12 @@ final class TemperatureStore: ObservableObject {
     @Published var cpuTemps: [Double] = []
     @Published var gpuTemps: [Double] = []
     @Published var memTemps: [Double] = []
+    @Published var aneTemps: [Double] = []
 
     @Published var cpuAvailable = false
     @Published var gpuAvailable = false
     @Published var memAvailable = false
+    @Published var aneAvailable = false
 
     private let smcReader = SMCReader()
     private var timer: Timer?
@@ -60,6 +62,10 @@ final class TemperatureStore: ObservableObject {
             push(v, to: &memTemps)
             memAvailable = true
         }
+        if let v = smcReader.aneTemperature {
+            push(v, to: &aneTemps)
+            aneAvailable = true
+        }
     }
 
     private func push(_ value: Double, to buffer: inout [Double]) {
@@ -78,6 +84,7 @@ final class TemperatureStore: ObservableObject {
         cpuAvailable = true
         gpuAvailable = true
         memAvailable = true
+        aneAvailable = true
 
         let t = Timer(timeInterval: 0.25, repeats: true) { [weak self] _ in
             self?.simTick()
@@ -91,8 +98,10 @@ final class TemperatureStore: ObservableObject {
         let cpu = 55.0 + 15.0 * sin(simPhase)
         let gpu = 45.0 + 20.0 * sin(simPhase * 0.7 + 1.0)
         let mem = 40.0 + 10.0 * sin(simPhase * 0.4 + 2.0)
+        let ane = 38.0 + 12.0 * sin(simPhase * 0.6 + 3.0)
         push(cpu, to: &cpuTemps)
         push(gpu, to: &gpuTemps)
         push(mem, to: &memTemps)
+        push(ane, to: &aneTemps)
     }
 }

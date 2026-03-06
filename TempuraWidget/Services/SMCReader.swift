@@ -121,6 +121,16 @@ final class SMCReader {
         return averageTemp(keys: keys)
     }
 
+    /// Average of available ANE (Apple Neural Engine) temperature sensors
+    var aneTemperature: Double? {
+        let keys = [
+            "Ta00", "Ta01", "Ta04", "Ta05",   // M4 ANE候補（Taプレフィックス）
+            "Ta08", "Ta09", "Ta0K", "Ta0L",
+            "Te04", "Te05", "Te06",            // Engine系（ANEの可能性）
+        ]
+        return averageTemp(keys: keys)
+    }
+
     /// Enumerate all SMC keys via index and log temperature-related ones (prefix "T")
     func logAvailableTemperatureKeys() {
         guard connection != 0 else {

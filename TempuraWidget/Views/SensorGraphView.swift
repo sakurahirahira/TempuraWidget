@@ -9,7 +9,7 @@ struct SensorGraphView: View {
     let isAvailable: Bool
 
     // デフォルトレンジ。データがはみ出たら自動拡張する
-    private let defaultMin: Double = 35
+    private var defaultMin: Double { thresholdTemp - 15 }
     private let defaultMax: Double = 60
 
     private var yRange: (min: Double, max: Double) {
@@ -31,14 +31,14 @@ struct SensorGraphView: View {
                 gridLines(in: geo.size)
                     .stroke(.white.opacity(0.07), lineWidth: 0.5)
 
-                // Line graph (smooth bezier)
+                // Line graph (smooth bezier) with temperature-based gradient
                 if temperatures.count >= 2 {
                     smoothPath(in: geo.size)
                         .stroke(
-                            sensorColor,
+                            temperatureGradient,
                             style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
                         )
-                        .shadow(color: sensorColor.opacity(0.6), radius: 4, x: 0, y: 0)
+                        .shadow(color: hotColor.opacity(0.5), radius: 4, x: 0, y: 0)
                 }
 
                 // Y-axis labels (right side)
@@ -64,7 +64,7 @@ struct SensorGraphView: View {
                     if let current = temperatures.last, isAvailable {
                         Text(String(format: "%.0f°", current))
                             .font(.system(size: 24, weight: .bold, design: .monospaced))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(currentTempColor(current))
                     } else {
                         Text("--°")
                             .font(.system(size: 24, weight: .bold, design: .monospaced))
@@ -152,7 +152,57 @@ struct SensorGraphView: View {
         switch label {
         case "CPU": return Color(red: 1.0, green: 0.25, blue: 0.65)  // マゼンタ/ピンク
         case "GPU": return Color(red: 0.2,  green: 0.75, blue: 1.0)  // シアン/水色
+        case "ANE": return Color(red: 1.0, green: 0.6,  blue: 0.1)  // オレンジ
         default:    return Color(red: 0.0,  green: 0.9,  blue: 0.75) // ティール/グリーン（MEM）
         }
+    }
+
+    /// 各センサーの閾値温度（これ以下はベースカラー、超えたらホットカラー）
+    private var thresholdTemp: Double {
+        switch label {
+        case "CPU": return 75.0
+        case "GPU": return 65.0
+        case "MEM": return 55.0
+        case "ANE": return 35.0
+        default:    return 60.0
+        }
+    }
+
+    /// 高温側の色（全センサー共通：赤オレンジ）
+    private var hotColor: Color {
+        Color(red: 1.0, green: 0.2, blue: 0.1)
+    }
+
+    /// 閾値〜+10度の間で白→ホットカラーへ線形補間
+    private func currentTempColor(_ temp: Double) -> Color {
+        let lo = thresholdTemp
+        let hi = thresholdTemp + 10
+        guard temp > lo else { return .white }
+        guard temp < hi else { return hotColor }
+        let t = (temp - lo) / (hi - lo)
+        // white(1,1,1) → hotColor(1.0, 0.2, 0.1)
+        return Color(red: 1.0, green: 1.0 - 0.8 * t, blue: 1.0 - 0.9 * t)
+    }
+
+    /// 閾値を境にベースカラー→ホットカラーへ切り替わるグラデーション
+    private var temperatureGradient: LinearGradient {
+        let range = maxTemp - minTemp
+        guard range > 0 else {
+            return LinearGradient(colors: [sensorColor], startPoint: .bottom, endPoint: .top)
+        }
+        // 閾値〜+10度の範囲でベースカラー→ホットカラーへ徐々に変化
+        let s1 = max(0.0, min(1.0, (thresholdTemp      - minTemp) / range))
+        let s2 = max(0.0, min(1.0, (thresholdTemp + 10 - minTemp) / range))
+
+        return LinearGradient(
+            stops: [
+                .init(color: sensorColor, location: 0.0),
+                .init(color: sensorColor, location: s1),
+                .init(color: hotColor,    location: s2),
+                .init(color: hotColor,    location: 1.0),
+            ],
+            startPoint: .bottom,
+            endPoint: .top
+        )
     }
 }
