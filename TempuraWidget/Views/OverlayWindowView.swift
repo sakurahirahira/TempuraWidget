@@ -25,25 +25,25 @@ struct OverlayWindowView: View {
                 if isWide {
                     // Medium: 4 sensors side by side
                     HStack(spacing: 1) {
-                        graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
+                        graphCell(label: "CPU", temps: store.cpuTemps, current: store.cpuCurrent, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
+                        graphCell(label: "GPU", temps: store.gpuTemps, current: store.gpuCurrent, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        graphCell(label: "MEM", temps: store.memTemps, current: store.memCurrent, available: store.memAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "ANE", temps: store.aneTemps, available: store.aneAvailable)
+                        graphCell(label: "ANE", temps: store.aneTemps, current: store.aneCurrent, available: store.aneAvailable)
                     }
                     .padding(8)
                 } else {
                     // Small: 4 sensors stacked
                     VStack(spacing: 1) {
-                        graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
+                        graphCell(label: "CPU", temps: store.cpuTemps, current: store.cpuCurrent, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
+                        graphCell(label: "GPU", temps: store.gpuTemps, current: store.gpuCurrent, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        graphCell(label: "MEM", temps: store.memTemps, current: store.memCurrent, available: store.memAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "ANE", temps: store.aneTemps, available: store.aneAvailable)
+                        graphCell(label: "ANE", temps: store.aneTemps, current: store.aneCurrent, available: store.aneAvailable)
                     }
                     .padding(8)
                 }
@@ -55,7 +55,8 @@ struct OverlayWindowView: View {
     }
 
     @ViewBuilder
-    private func graphCell(label: String, temps: [Double], available: Bool) -> some View {
-        SensorGraphView(label: label, temperatures: temps, isAvailable: available)
+    private func graphCell(label: String, temps: [Double], current: Double?, available: Bool) -> some View {
+        SensorGraphView(label: label, temperatures: temps, currentTemp: current, isAvailable: available)
+            .drawingGroup()  // Metal テクスチャに flatten してコンポジット効率化
     }
 }
