@@ -104,7 +104,7 @@ struct SensorGraphView: View {
         //    満杯になったら左スクロールになる
         let xScale = size.width / Double(maxPoints - 1)
 
-        // 3. 間引き（表示用に最大60点）— 固定ストライドでスプラインを安定させる
+        // 3. 間引き（表示用に最大60点）— 固定ストライドでスプライン安定 + 最新点を常に追加
         let strideSize = max(1, maxPoints / 60)  // 常に40
         var pts: [CGPoint] = []
         var i = 0
@@ -113,6 +113,14 @@ struct SensorGraphView: View {
             let y = size.height - (smoothed[i] - minTemp) / (maxTemp - minTemp) * size.height
             pts.append(CGPoint(x: x, y: max(0, min(size.height, y))))
             i += strideSize
+        }
+        // 最新データポイントを常に末尾に追加（ストライド境界でない場合）
+        // → 毎秒グラフ先端が更新される
+        let lastIdx = smoothed.count - 1
+        if lastIdx % strideSize != 0 {
+            let x = Double(lastIdx) * xScale
+            let y = size.height - (smoothed[lastIdx] - minTemp) / (maxTemp - minTemp) * size.height
+            pts.append(CGPoint(x: x, y: max(0, min(size.height, y))))
         }
 
         // 4. Catmull-Rom スプライン
