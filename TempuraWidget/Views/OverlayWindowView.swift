@@ -11,6 +11,8 @@ struct OverlayWindowView: View {
             let isWide = geo.size.width > 400
 
             ZStack {
+                // renderTick を参照して1Hzのみ再描画させる invisible anchor
+                Color.clear.frame(width: 0, height: 0).id(store.renderTick)
                 // Dark navy background (画像に合わせたダークネイビー)
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color(red: 0.12, green: 0.14, blue: 0.20).opacity(0.92))

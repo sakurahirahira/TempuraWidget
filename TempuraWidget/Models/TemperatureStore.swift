@@ -9,15 +9,20 @@ final class TemperatureStore: ObservableObject {
     // Ring buffer size: 4 Hz × 60 s × 10 min = 2400
     private let maxPoints = 2400
 
-    @Published var cpuTemps: [Double] = []
-    @Published var gpuTemps: [Double] = []
-    @Published var memTemps: [Double] = []
-    @Published var aneTemps: [Double] = []
+    // データ配列は @Published 外 — renderTick 経由で1Hzのみ再描画
+    private(set) var cpuTemps: [Double] = []
+    private(set) var gpuTemps: [Double] = []
+    private(set) var memTemps: [Double] = []
+    private(set) var aneTemps: [Double] = []
 
-    @Published var cpuAvailable = false
-    @Published var gpuAvailable = false
-    @Published var memAvailable = false
-    @Published var aneAvailable = false
+    private(set) var cpuAvailable = false
+    private(set) var gpuAvailable = false
+    private(set) var memAvailable = false
+    private(set) var aneAvailable = false
+
+    // 1Hz で +1 する描画トリガー専用カウンタ
+    @Published private(set) var renderTick: Int = 0
+    private var tickCount = 0
 
     private let smcReader = SMCReader()
     private var timer: Timer?
@@ -66,6 +71,10 @@ final class TemperatureStore: ObservableObject {
             push(v, to: &aneTemps)
             aneAvailable = true
         }
+        tickCount += 1
+        if tickCount % 4 == 0 {  // 4Hz → 1Hz
+            renderTick += 1
+        }
     }
 
     private func push(_ value: Double, to buffer: inout [Double]) {
@@ -103,5 +112,9 @@ final class TemperatureStore: ObservableObject {
         push(gpu, to: &gpuTemps)
         push(mem, to: &memTemps)
         push(ane, to: &aneTemps)
+        tickCount += 1
+        if tickCount % 4 == 0 {
+            renderTick += 1
+        }
     }
 }

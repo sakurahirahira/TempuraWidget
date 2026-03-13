@@ -104,8 +104,8 @@ struct SensorGraphView: View {
         //    満杯になったら左スクロールになる
         let xScale = size.width / Double(maxPoints - 1)
 
-        // 3. 間引き（表示用に最大60点）
-        let strideSize = max(1, smoothed.count / 60)
+        // 3. 間引き（表示用に最大60点）— 固定ストライドでスプラインを安定させる
+        let strideSize = max(1, maxPoints / 60)  // 常に40
         var pts: [CGPoint] = []
         var i = 0
         while i < smoothed.count {
