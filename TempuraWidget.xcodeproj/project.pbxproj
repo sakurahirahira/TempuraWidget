@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA11223344556677889900AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB11223344556677889900BB /* Assets.xcassets */; };
 		0216221564D7539849FE72A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */; };
 		05FFAB049AA93CED02B2CAE4 /* SensorReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B502C20C7567534C5FB3D /* SensorReading.swift */; };
 		18BAA5DC912B0D226DD663D7 /* OverlayWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB11223344556677889900BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0301491D1C77DAF59B26BEBF /* OverlayWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayWindowView.swift; sourceTree = "<group>"; };
 		1987777F9F6A23FDF4A9D82B /* SensorGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorGraphView.swift; sourceTree = "<group>"; };
 		1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,6 +44,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CC11223344556677889900CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA11223344556677889900AA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXGroup section */
 		45D8DFFE9FB3C7D91FA6DAC8 /* Products */ = {
@@ -99,6 +112,7 @@
 		D5480C6DE6A447C3646577C1 /* TempuraWidget */ = {
 			isa = PBXGroup;
 			children = (
+				BB11223344556677889900BB /* Assets.xcassets */,
 				1C156BD79B6217E9FF7890D9 /* AppDelegate.swift */,
 				AE5A300D20D4A1452883A31E /* Info.plist */,
 				E44CD3B82C330D61B6D356AC /* TempuraWidgetApp.swift */,
@@ -116,6 +130,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E4F5F222F21A460F4AC347E5 /* Build configuration list for PBXNativeTarget "TempuraWidget" */;
 			buildPhases = (
+				CC11223344556677889900CC /* Resources */,
 				5A6AAAD7B2043D3FDF3D3DC9 /* Sources */,
 				919260077837FA49A27492DB /* Frameworks */,
 			);

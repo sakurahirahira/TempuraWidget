@@ -11,33 +11,39 @@ struct OverlayWindowView: View {
             let isWide = geo.size.width > 400
 
             ZStack {
-                // Frosted glass background
+                // renderTick を参照して1Hzのみ再描画させる invisible anchor
+                Color.clear.frame(width: 0, height: 0).id(store.renderTick)
+                // Dark navy background (画像に合わせたダークネイビー)
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.ultraThinMaterial)
+                    .fill(Color(red: 0.12, green: 0.14, blue: 0.20).opacity(0.92))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .strokeBorder(.white.opacity(0.15), lineWidth: 0.5)
+                            .strokeBorder(.white.opacity(0.12), lineWidth: 0.5)
                     )
 
                 // Sensor graphs
                 if isWide {
-                    // Medium: 3 sensors side by side
+                    // Medium: 4 sensors side by side
                     HStack(spacing: 1) {
-                        graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
+                        graphCell(label: "CPU", temps: store.cpuTemps, current: store.cpuCurrent, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
+                        graphCell(label: "GPU", temps: store.gpuTemps, current: store.gpuCurrent, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        graphCell(label: "MEM", temps: store.memTemps, current: store.memCurrent, available: store.memAvailable)
+                        Divider().background(.white.opacity(0.1))
+                        graphCell(label: "ANE", temps: store.aneTemps, current: store.aneCurrent, available: store.aneAvailable)
                     }
                     .padding(8)
                 } else {
-                    // Small: 3 sensors stacked
+                    // Small: 4 sensors stacked
                     VStack(spacing: 1) {
-                        graphCell(label: "CPU", temps: store.cpuTemps, available: store.cpuAvailable)
+                        graphCell(label: "CPU", temps: store.cpuTemps, current: store.cpuCurrent, available: store.cpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "GPU", temps: store.gpuTemps, available: store.gpuAvailable)
+                        graphCell(label: "GPU", temps: store.gpuTemps, current: store.gpuCurrent, available: store.gpuAvailable)
                         Divider().background(.white.opacity(0.1))
-                        graphCell(label: "MEM", temps: store.memTemps, available: store.memAvailable)
+                        graphCell(label: "MEM", temps: store.memTemps, current: store.memCurrent, available: store.memAvailable)
+                        Divider().background(.white.opacity(0.1))
+                        graphCell(label: "ANE", temps: store.aneTemps, current: store.aneCurrent, available: store.aneAvailable)
                     }
                     .padding(8)
                 }
@@ -49,7 +55,8 @@ struct OverlayWindowView: View {
     }
 
     @ViewBuilder
-    private func graphCell(label: String, temps: [Double], available: Bool) -> some View {
-        SensorGraphView(label: label, temperatures: temps, isAvailable: available)
+    private func graphCell(label: String, temps: [Double], current: Double?, available: Bool) -> some View {
+        SensorGraphView(label: label, temperatures: temps, currentTemp: current, isAvailable: available)
+            .drawingGroup()  // Metal テクスチャに flatten してコンポジット効率化
     }
 }

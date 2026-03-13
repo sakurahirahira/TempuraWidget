@@ -121,6 +121,16 @@ final class SMCReader {
         return averageTemp(keys: keys)
     }
 
+    /// Average of available ANE (Apple Neural Engine) temperature sensors
+    var aneTemperature: Double? {
+        let keys = [
+            "Ta00", "Ta01", "Ta04", "Ta05",   // M4 ANE候補（Taプレフィックス）
+            "Ta08", "Ta09", "Ta0K", "Ta0L",
+            "Te04", "Te05", "Te06",            // Engine系（ANEの可能性）
+        ]
+        return averageTemp(keys: keys)
+    }
+
     /// Enumerate all SMC keys via index and log temperature-related ones (prefix "T")
     func logAvailableTemperatureKeys() {
         guard connection != 0 else {
@@ -229,8 +239,8 @@ final class SMCReader {
             return Double(raw) / 4.0
 
         case kFLT:
-            // 32-bit float, big-endian bytes
-            let bits = UInt32(b0) << 24 | UInt32(b1) << 16 | UInt32(value.bytes.2) << 8 | UInt32(value.bytes.3)
+            // 32-bit float, little-endian bytes (Apple Silicon SMC)
+            let bits = UInt32(value.bytes.3) << 24 | UInt32(value.bytes.2) << 16 | UInt32(b1) << 8 | UInt32(b0)
             return Double(Float(bitPattern: bits))
 
         default:
